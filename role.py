@@ -3,7 +3,7 @@ class Role:
     def __init__(self,title="",city="",state="",department="",
                  job_level="",job_module="",poc="",
                  contact_origin="",contact_details="",referral_contact="",
-                 application_date="", application_status=""):
+                 application_date="", application_status="", application_result=""):
         
         self.title = title
         self.city = city
@@ -16,7 +16,8 @@ class Role:
         self.poc_details = contact_details
         self.referral_contact = referral_contact
         self.app_date = application_date
-        self.app_status = application_status        
+        self.app_status = application_status
+        self.app_result = application_result
 
     @property
     def location(self):

@@ -26,3 +26,6 @@ excluded module named _frozen_importlib - imported by importlib (optional), impo
 missing module named _frozen_importlib_external - imported by importlib._bootstrap (delayed), importlib (optional), importlib.abc (optional), zipimport (top-level)
 missing module named _posixsubprocess - imported by subprocess (optional)
 missing module named fcntl - imported by subprocess (optional)
+missing module named Database - imported by D:\Companies list\ApplicationDatabase\DataEntry\test.py (top-level)
+missing module named 'Objects.role' - imported by D:\Companies list\ApplicationDatabase\DataEntry\test.py (top-level)
+missing module named Objects - imported by D:\Companies list\ApplicationDatabase\DataEntry\test.py (top-level)

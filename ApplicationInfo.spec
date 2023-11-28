@@ -2,7 +2,7 @@
 
 
 a = Analysis(
-    ['test.py'],
+    ['ApplicationDatabase\\DataEntry\\test.py'],
     pathex=[],
     binaries=[],
     datas=[],

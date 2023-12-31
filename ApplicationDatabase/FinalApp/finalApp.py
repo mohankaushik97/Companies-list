@@ -5,7 +5,12 @@ from PyQt6.QtSql import QSqlTableModel, QSqlDatabase, QSqlQuery
 from PyQt6.QtCore import Qt
 from PyQt6 import QtCore
 
-sys.path.insert(0, 'D:\Companies list\ApplicationDatabase')
+sys.path.insert(0, '/home/mohan/Desktop/Companies-list/ApplicationDatabase')
+
+# directory = path.path(__file__).abspath()
+
+# sys.path.append(directory.parent.parent)
+
 from DataVisualization.dataV import DataVis
 from DataEntry.newEntry import NewEntry
 from DataEntry.updateAll import UpdateAll

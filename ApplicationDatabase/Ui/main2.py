@@ -1,3 +1,5 @@
+#!/usr/bin/env Python3
+
 import sys
 from datetime import date
 from telnetlib import STATUS
@@ -7,7 +9,7 @@ from PyQt6.QtSql import QSqlTableModel, QSqlDatabase, QSqlQuery
 from PyQt6.QtCore import Qt, QEvent, QDate
 from PyQt6 import QtCore
 
-sys.path.insert(0, 'D:\Companies list\ApplicationDatabase')
+sys.path.insert(0, '/home/mohan/Desktop/Companies-list/ApplicationDatabase')
 # from DataVisualization.data import ShowData
 from Objects.objects import ObjImports
 from Objects.dataView import DataView
@@ -186,12 +188,19 @@ class ApplicationVer2(QMainWindow):
     def dispUpdateStatus(self):
         self.update_status = self.update_stat_obj.create_update_status_box()
         
-        self.update_stat_obj.search_role_button.clicked.connect(self.search_app_status_data)
+        
+        compName = self.update_stat_obj.search_comp_entry.text()
+        roleTitle = self.update_stat_obj.search_role_entry.text()
+        
+        self.update_stat_obj.search_role_button.clicked.connect(lambda: self.search_app_status_data(compName,roleTitle))
         
     def dispUpdateAll(self):
         self.update_all = self.update_all_obj.create_update_all_box()
         
-        self.update_all_obj.search_role_button.clicked.connect(self.search_role_data)
+        compName = self.update_all_obj.search_comp_entry.text()
+        roleTitle = self.update_all_obj.search_role_entry.text()
+        
+        self.update_all_obj.search_role_button.clicked.connect(lambda: self.search_role_data(compName,roleTitle))
         pass
     
     def search_comp_data(self,compName):
@@ -209,11 +218,11 @@ class ApplicationVer2(QMainWindow):
         self.update_comp_obj.revenue_combo.setCurrentText(comp.revenue)
         self.update_comp_obj.company_info_entry.setText(comp.add_info)
         
-    def search_app_status_data(self):
+    def search_app_status_data(self,compName,roleTitle):
         self.status_bar.showMessage("Getting Application Status Details",300)
 
-        compName = self.update_stat_obj.search_comp_entry.text()
-        roleTitle = self.update_stat_obj.search_role_entry.text()
+        compName = compName
+        roleTitle = roleTitle
         comp = self.db.get_comp_details_by_name(compName)
         role = self.db.get_role_details(compName,roleTitle)
         self.update_stat_obj.role_title_entry.setText(role.title)
@@ -224,11 +233,12 @@ class ApplicationVer2(QMainWindow):
         
         pass
     
-    def search_role_data(self):
+    def search_role_data(self,compName,roleTitle):
         self.status_bar.showMessage("Getting Role Details.",1000)
         
-        compName = self.update_all_obj.search_comp_entry.text()
-        roleTitle = self.update_all_obj.search_role_entry.text()
+
+        compName = compName
+        roleTitle = roleTitle
         self.company = self.db.get_comp_details_by_name(compName)
         self.role = self.db.get_role_details(compName,roleTitle)
         
@@ -374,6 +384,8 @@ class ApplicationVer2(QMainWindow):
                 self.search_comp_data(Company)    
 
     def on_update_status_button(self):
+        self.main_tabs.setCurrentIndex(2)
+        self.update_tabs.setCurrentIndex(1)
         match self.data_tabs.currentIndex():
             case 0:
                 selection = self.search_comp_obj.tableView.selectionModel()
@@ -381,34 +393,32 @@ class ApplicationVer2(QMainWindow):
                 row = index.row()
                 Company = self.search_comp_obj.tableView.model().data(self.search_comp_obj.tableView.model().index(row,0))
                 Role = self.search_comp_obj.tableView.model().data(self.search_comp_obj.tableView.model().index(row,1))
-                print(Company)
-                print(Role)
+                self.search_app_status_data(Company,Role)
             case 1:
                 selection = self.search_role_obj.tableView.selectionModel()
                 index =  self.search_role_obj.tableView.currentIndex()
                 row = index.row()
                 Company = self.search_role_obj.tableView.model().data(self.search_role_obj.tableView.model().index(row,0))
                 Role = self.search_role_obj.tableView.model().data(self.search_role_obj.tableView.model().index(row,1))
-                print(Company)
-                print(Role)
+                self.search_app_status_data(Company,Role)
             case 2:
                 selection = self.search_status_obj.tableView.selectionModel()
                 index = self.search_status_obj.tableView.currentIndex()
                 row = index.row()
                 Company = self.search_status_obj.tableView.model().data(self.search_status_obj.tableView.model().index(row,0))
                 Role = self.search_status_obj.tableView.model().data(self.search_status_obj.tableView.model().index(row,1))
-                print(Company)
-                print(Role)
+                self.search_app_status_data(Company,Role)
             case 3:
                 selection = self.search_industry_obj.tableView.selectionModel()
                 index = self.search_industry_obj.tableView.currentIndex()
                 row = index.row()
                 Company = self.search_industry_obj.tableView.model().data(self.search_industry_obj.tableView.model().index(row,0))
                 Role = self.search_industry_obj.tableView.model().data(self.search_industry_obj.tableView.model().index(row,1))
-                print(Company)
-                print(Role)
+                self.search_app_status_data(Company,Role)
     
     def  on_update_all_button(self):
+        self.main_tabs.setCurrentIndex(2)
+        self.update_tabs.setCurrentIndex(2)
         match self.data_tabs.currentIndex():
             case 0:
                 selection = self.search_comp_obj.tableView.selectionModel()
@@ -416,8 +426,7 @@ class ApplicationVer2(QMainWindow):
                 row = index.row()
                 Company = self.search_comp_obj.tableView.model().data(self.search_comp_obj.tableView.model().index(row,0))
                 Role = self.search_comp_obj.tableView.model().data(self.search_comp_obj.tableView.model().index(row,1))
-                print(Company)
-                print(Role)
+                self.search_role_data(Company,Role)
     
             case 1:
                 selection = self.search_role_obj.tableView.selectionModel()
@@ -425,8 +434,7 @@ class ApplicationVer2(QMainWindow):
                 row = index.row()
                 Company = self.search_role_obj.tableView.model().data(self.search_role_obj.tableView.model().index(row,0))
                 Role = self.search_role_obj.tableView.model().data(self.search_role_obj.tableView.model().index(row,1))
-                print(Company)
-                print(Role)
+                self.search_role_data(Company,Role)
     
             case 2:
                 selection = self.search_status_obj.tableView.selectionModel()
@@ -434,8 +442,7 @@ class ApplicationVer2(QMainWindow):
                 row = index.row()
                 Company = self.search_status_obj.tableView.model().data(self.search_status_obj.tableView.model().index(row,0))
                 Role = self.search_status_obj.tableView.model().data(self.search_status_obj.tableView.model().index(row,1))
-                print(Company)
-                print(Role)
+                self.search_role_data(Company,Role)
     
             case 3:
                 selection = self.search_industry_obj.tableView.selectionModel()
@@ -443,8 +450,7 @@ class ApplicationVer2(QMainWindow):
                 row = index.row()
                 Company = self.search_industry_obj.tableView.model().data(self.search_industry_obj.tableView.model().index(row,0))
                 Role = self.search_industry_obj.tableView.model().data(self.search_industry_obj.tableView.model().index(row,1))
-                print(Company)
-                print(Role)
+                self.search_role_data(Company,Role)
 
     @QtCore.pyqtSlot()
     def on_tab(self):

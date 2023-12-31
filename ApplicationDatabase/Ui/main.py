@@ -7,7 +7,7 @@ from PyQt6.QtCore import Qt, QEvent
 from PyQt6 import QtCore
 
 
-sys.path.insert(0, 'D:\Companies list\ApplicationDatabase')
+sys.path.insert(0, '/home/mohan/Desktop/Companies-list/ApplicationDatabase')
 # from DataVisualization.data import ShowData
 from Objects.objects import ObjImports
 

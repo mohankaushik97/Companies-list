@@ -8,7 +8,7 @@ from PyQt6.QtSql import QSqlTableModel, QSqlDatabase, QSqlQuery
 from PyQt6.QtCore import Qt
 # from DataEntry.updateCompany import UpdateComp
 
-sys.path.insert(0, 'D:\Companies list\ApplicationDatabase')
+# sys.path.insert(0, 'D:\Companies list\ApplicationDatabase')
 
 class DataView():
     def __init__(self):
@@ -123,8 +123,8 @@ class DataView():
 
     def connectDatabase(self):
         self.conn = QSqlDatabase.addDatabase('QSQLITE')
-        self.conn.setDatabaseName('.\ApplicationDatabase\Database\database.db')
-        # self.conn.setDatabaseName('database.db')
+        # self.conn.setDatabaseName('.\ApplicationDatabase\Database\database.db')
+        self.conn.setDatabaseName('database.db')
         if not self.conn.open():
             QMessageBox.critical(
                 None,

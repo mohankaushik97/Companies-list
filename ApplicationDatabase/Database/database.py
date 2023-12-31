@@ -1,6 +1,6 @@
 import sqlite3
 import sys
-sys.path.insert(0, 'D:\Companies list\ApplicationDatabase')
+# sys.path.insert(0, 'D:\Companies list\ApplicationDatabase')
 from Objects.company import Company
 from Objects.role import Role
 
@@ -16,8 +16,8 @@ class Database():
 
     def start_conn(self):
         # TODO: Change the connection when producing exe
-        self.conn = sqlite3.connect('D:\Companies list\ApplicationDatabase\Database\database.db')
-        # self.conn = sqlite3.connect('database.db')
+        # self.conn = sqlite3.connect('D:\Companies list\ApplicationDatabase\Database\database.db')
+        self.conn = sqlite3.connect('database.db')
         self.cursor = self.conn.cursor()
         
     def create_tables(self):
@@ -140,7 +140,7 @@ class Database():
         self.start_conn()
         self.cursor.execute("SELECT Roles.* FROM Roles,Companies WHERE  Companies.Name LIKE '%{}%' AND roles.title LIKE '%{}%' AND Companies.ROWID = Roles.Company_ID".format(compName,roleTitle))
         role = self.cursor.fetchone()
-        print(role)
+        # print(role)
         role = Role(*role)
         self.close_conn()
         return role
